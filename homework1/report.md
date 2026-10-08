@@ -76,6 +76,7 @@ P(S) = {{}, {a}, {b}, {c}, {a,b}, {a,c}, {b,c}, {a,b,c}}
 #include <iostream>
 using namespace std;
 
+//第一題:遞迴Ackermann
 int A(int m, int n)
 {
     if (m==0)
@@ -93,6 +94,61 @@ int main()
 
     cout<<"輸入 m 和 n：";
     cin>>m>>n;
+
+    cout<<A(m,n)<<endl;
+
+    return 0;
+}
+
+#include <iostream>
+using namespace std;
+
+//第一題:非遞迴Ackermann
+int A(int m,int n)
+{
+    int s[100000];
+    int top=0;
+
+   
+    s[top]=m;
+
+    while (top>=0)
+    {
+        
+        m=s[top];
+        top--;
+
+        if (m==0)
+        {
+            n=n+1;
+        }
+        else if (n==0)
+        {
+            n=1;
+            top++;
+            s[top]=m-1;
+        }
+        else
+        {
+            n=n-1;
+
+            top++;
+            s[top]=m-1;
+
+            top++;
+            s[top]=m;
+        }
+    }
+
+    return n;
+}
+
+int main()
+{
+    int m,n;
+
+    cout<<"請輸入 m 和 n：";
+    cin >>m>>n;
 
     cout<<A(m,n)<<endl;
 
@@ -116,34 +172,40 @@ int main()
 #include <iostream>
 using namespace std;
 
-char S[3]={'a','b','c'};
-int choose[3]={0};
+char S[3] = {'a', 'b', 'c'};
+int choose[3] = {0, 0, 0};
 
 void Powerset(int i)
 {
-    if (i==3)
+    if (i == 3)
     {
-        cout<<"{";
+        cout << "{";
 
-        for (int j=0;j<3; j++)
+        for (int j = 0; j < 3; j++)
         {
-            if (choose[j]==1)
-                cout<<S[j]<<" ";
+            if (choose[j] == 1)
+            {
+                cout << S[j] << " ";
+            }
         }
 
-        cout<<"}"<<endl;
+        cout << "}" << endl;
         return;
     }
 
-    choose[i]=0;
-    Powerset(i+1);
+    // 不選擇目前元素
+    choose[i] = 0;
+    Powerset(i + 1);
 
-    choose[i]=1;
-    Powerset(i+1);
+    // 選擇目前元素
+    choose[i] = 1;
+    Powerset(i + 1);
 }
+
 int main()
 {
     Powerset(0);
+
     return 0;
 }
 ```
