@@ -281,12 +281,7 @@ $$
 
 編譯程式：
 
-```shell
-$ g++ ackermann_recursive.cpp --std=c++21 -o recursive.exe
-$ .\recursive.exe
-輸入 m 和 n：1 2
-4
-```
+![遞迴執行結果](picture/recursive.png)
 
 輸入 m = 1、n = 2，結果為 4。
 
