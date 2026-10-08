@@ -1,4 +1,4 @@
-#41143268
+41143268
 # Homework 1：Recursion
 
 ---
