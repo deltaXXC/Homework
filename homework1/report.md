@@ -3,7 +3,7 @@
 
 ---
 
-## 1. 解題說明
+## 解題說明
 
 ### Problem 1：Ackermann Function
 
@@ -69,7 +69,7 @@ P(S) = {{}, {a}, {b}, {c}, {a,b}, {a,c}, {b,c}, {a,b,c}}
 
 ---
 
-## 2. 程式實作
+## 程式實作
 
 ### Problem 1：Ackermann Function
 
@@ -222,7 +222,7 @@ int main()
 
 ---
 
-## 3. 效能分析
+## 效能分析
 
 ### Problem 1：Ackermann Function
 
@@ -274,7 +274,7 @@ $$
 
 ---
 
-## 4. 測試與驗證
+## 測試與驗證
 
 ### Problem 1：Ackermann Function
 
@@ -342,7 +342,7 @@ $$
 
 ---
 
-## 5. 申論及開發報告
+## 申論及開發報告
 
 ### Problem 1：Ackermann Function
 
