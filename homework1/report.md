@@ -266,7 +266,7 @@ $$
 #### 遞迴版本：編譯與執行指令
 
 ```shell
-$ g++ ackermann_recursive.cpp --std=c++21 -o recursive.exe
+$ g++ recursive.cpp --std=c++21 -o recursive.exe
 $ .\recursive.exe
 輸入 m 和 n：2 2
 7
@@ -275,7 +275,7 @@ $ .\recursive.exe
 #### 非遞迴版本：編譯與執行指令
 
 ```shell
-$ g++ ackermann_nonrecursive.cpp --std=c++21 -o nonrecursive.exe
+$ g++ nonrecursive.cpp --std=c++21 -o nonrecursive.exe
 $ .\nonrecursive.exe
 請輸入 m 和 n：2 2
 7
