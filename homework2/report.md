@@ -393,34 +393,163 @@ Eval P(2) = 17
 
 ### 選擇遞迴的原因
 
-在本程式中，使用遞迴來計算連加總和的主要原因如下：
+## 申論及開發報告
 
-1. **程式邏輯簡單直觀**  
-   遞迴的寫法能夠清楚表達「將問題拆解為更小的子問題」的核心概念。  
-   例如，計算 $\Sigma(n)$ 的過程可分解為：  
+### 一、選擇 Term 類別的原因
 
-   $$
-   \Sigma(n) = n + \Sigma(n-1)
-   $$
+在本程式中，使用 `Term` 類別儲存多項式的單一項目，每個項目包含係數（coef）與指數（Exp）。
 
-   當 $n$ 等於 1 或 0 時，直接返回結果，結束遞迴。
+例如：
 
-2. **易於理解與實現**  
-   遞迴的程式碼更接近數學公式的表示方式，特別適合新手學習遞迴的基本概念。  
-   以本程式為例：  
+$$
+3x^2+2x+1
+$$
 
-   ```cpp
-   int sigma(int n) {
-       if (n < 0)
-           throw "n < 0";
-       else if (n <= 1)
-           return n;
-       return n + sigma(n - 1);
-   }
-   ```
+可以拆成三個 Term：
 
-3. **遞迴的語意清楚**  
-   在程式中，每次遞迴呼叫都代表一個「子問題的解」，而最終遞迴的返回結果會逐層相加，完成整體問題的求解。  
-   這種設計簡化了邏輯，不需要額外變數來維護中間狀態。
+- (3, 2)：代表 3x²
+- (2, 1)：代表 2x
+- (1, 0)：代表常數 1
 
-透過遞迴實作 Sigma 計算，程式邏輯簡單且易於理解，特別適合展示遞迴的核心思想。然而，遞迴會因堆疊深度受到限制，當 $n$ 值過大時，應考慮使用迭代版本來避免 Stack Overflow 問題。
+```cpp
+class Term {
+    friend class polynomial;
+private:
+    float coef;
+    int Exp;
+};
+```
+
+使用 `private` 保護資料，並透過 `friend class polynomial` 讓 polynomial 類別能夠存取係數與指數。
+
+這樣能將每一項的資料集中管理，方便後續進行多項式運算。
+
+### 二、選擇 polynomial 類別的原因
+
+`polynomial` 類別負責管理整個多項式，使用動態陣列儲存多個 Term。
+
+```cpp
+class polynomial {
+private:
+    Term* TermArray;
+    int capacity;
+    int terms;
+};
+```
+
+其中：
+
+- `TermArray`：儲存多項式的所有項目。
+- `capacity`：陣列目前可容納的項目數量。
+- `terms`：多項式實際儲存的項目數量。
+
+使用動態陣列的原因是多項式的項數不固定，當陣列容量不足時，可以自動擴充空間。
+
+這種設計可以依照實際需求配置記憶體，不需要事先設定固定的項數上限。
+
+### 三、Add() 多項式加法的設計概念
+
+多項式相加時，只有指數相同的項目才能合併。
+
+例如：
+
+$$
+(3x^2+2x+1)+(x+4)
+$$
+
+$$
+=3x^2+3x+5
+$$
+
+程式使用兩個索引，分別讀取兩個多項式的項目。
+
+```cpp
+if (TermArray[firstindex].Exp ==
+    secondpolymial.TermArray[secondindex].Exp) {
+
+    float sumCoef = TermArray[firstindex].coef +
+                    secondpolymial.TermArray[secondindex].coef;
+
+    resultpolynomial.newTerm(
+        sumCoef, TermArray[firstindex].Exp
+    );
+
+    firstindex++;
+    secondindex++;
+}
+```
+
+當指數相同時，將係數相加；指數不同時，先加入指數較大的項目。
+
+這種方法適合已經按照指數由大到小排列的多項式，可以依序完成加法，不需要重新排序。
+
+### 四、Mult() 多項式乘法的設計概念
+
+多項式乘法需要將第一個多項式的每一項，分別乘上第二個多項式的所有項目。
+
+乘法規則為：
+
+$$
+(ax^m)(bx^n)=abx^{m+n}
+$$
+
+例如：
+
+$$
+(3x^2)(2x)=6x^3
+$$
+
+程式使用雙層迴圈進行乘法：
+
+```cpp
+for (int i = 0; i < terms; i++) {
+    for (int j = 0; j < secondpolymial.terms; j++) {
+
+        float newCoef = TermArray[i].coef *
+                        secondpolymial.TermArray[j].coef;
+
+        int newExp = TermArray[i].Exp +
+                     secondpolymial.TermArray[j].Exp;
+
+        resultpolynomial.newTerm(newCoef, newExp);
+    }
+}
+```
+
+完成乘法後，可能產生指數相同的項目，因此再利用 `sort()` 排序，並將相同指數的係數合併。
+使用雙層迴圈可以確保每一組項目都完成相乘，適合實作基本的多項式乘法。
+### 五、Eval() 多項式求值的設計概念
+
+`Eval()` 的功能是將指定的數值代入多項式，計算最後的結果。
+
+例如：
+
+$$
+P(x)=3x^2+2x+1
+$$
+
+當 x = 2 時：
+
+$$
+P(2)=3(2)^2+2(2)+1=17
+$$
+
+程式利用 `pow()` 計算次方，再將每一項的結果加總。
+
+```cpp
+float polynomial::Eval(float f) const {
+    float result = 0;
+
+    for (int i = 0; i < terms; i++) {
+        result += TermArray[i].coef *
+                  pow(f, TermArray[i].Exp);
+    }
+
+    return result;
+}
+```
+
+使用迴圈逐項計算，可以支援不同項數與指數的多項式，不需要針對每一種多項式另外撰寫公式。
+本程式利用 `Term` 儲存單一項目的係數與指數，再透過 `polynomial` 類別及動態陣列管理整個多項式。
+`Add()` 使用索引比較指數，`Mult()` 使用雙層迴圈完成乘法與同類項合併，`Eval()` 則透過迴圈與 `pow()` 計算多項式的數值。
+這種設計將資料儲存與運算功能整合在類別中，使程式結構清楚，也方便未來增加多項式減法、微分等其他功能。
