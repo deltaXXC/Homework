@@ -358,15 +358,14 @@ int main() {
 
 | 測試案例 | 輸入參數 | 預期輸出 | 實際輸出 |
 |----------|----------|----------|----------|
-| 測試一 | P=3x²+2x+1，Q=x+4，x=2 | Add=3x²+3x+5<br>Mult=3x³+14x²+9x+4<br>Eval=17 | Add=3x²+3x+5<br>Mult=3x³+14x²+9x+4<br>Eval=17 |
-| 測試二 | P=2x+3，Q=x+1，x=1 | Add=3x+4<br>Mult=2x²+5x+3<br>Eval=5 | Add=3x^2 + 3x + 2<br>Mult=3x^3 + 5x^2 + 3x + 1<br>Eval=6 |
-| 測試三 | P=x²+2x+1，Q=x+2，x=3 | Add=x²+3x+3<br>Mult=x³+4x²+5x+2<br>Eval=16 | 待測試 |
-| 測試四 | P=4x²+3x+2，Q=2x+1，x=0 | Add=4x²+5x+3<br>Mult=8x³+10x²+7x+2<br>Eval=2 | 待測試 |
-| 測試五 | P=2x²+x+3，Q=x+2，x=-1 | Add=2x²+2x+5<br>Mult=2x³+5x²+5x+6<br>Eval=4 | 待測試 |
+| 測試一 | P=3x²+2x+1，Q=x+4，x=2 | Add=3x^2+3x+5<br>Mult=3x^3+14x^2+9x+4<br>Eval=17 | Add=3x²+3x+5<br>Mult=3x³+14x²+9x+4<br>Eval=17 |
+| 測試二 | P=2x+3，Q=x+1，x=1 | Add=3x+4<br>Mult=2x^2+5x+3<br>Eval=5 | Add=3x + 4<br>Mult=2x^2 + 5x + 3<br>Eval=5 |
+| 測試三 | P=x²+2x+1，Q=x+2，x=3 | Add=x^2+3x+3<br>Mult=x^3+4x^2+5x+2<br>Eval=16 | Add=x^2 + 3x + 3<br>Mult=x^3 + 4x^2 + 5x + 2<br>Eval=16 |
 
 ### 編譯與執行指令
 
 ```shell
+D:\code\C++> cmd /C "set "DEBUGINFOD_URLS=" && c:\Users\awer1\.vscode\extensions\ms-vscode.cpptools-1.35.6-win32-x64\debugAdapters\bin\WindowsDebugLauncher.exe --stdin=Microsoft-MIEngine-In-0fu5b5nn.5sl --stdout=Microsoft-MIEngine-Out-d50ajhps.yaw --stderr=Microsoft-MIEngine-Error-5sd1wloe.pbt --pid=Microsoft-MIEngine-Pid-ickz4ygb.h3b --dbgExe=C:\mingw64\bin\gdb.exe --interpreter=mi "
 P(x) = 3x^2 + 2x + 1
 Q(x) = x + 4
 Add = 3x^2 + 3x + 5
@@ -377,9 +376,18 @@ Eval P(2) = 17
 
 ### 結論
 
-1. 程式能正確計算 $n$ 到 $1$ 的連加總和。  
-2. 在 $n < 0$ 的情況下，程式會成功拋出異常，符合設計預期。  
-3. 測試案例涵蓋了多種邊界情況（$n = 0$、$n = 1$、$n > 1$、$n < 0$），驗證程式的正確性。
+本次作業使用 C++ 的 Class 與動態陣列實作多項式運算，完成 Add、Mult、Eval 三種功能。透過這次實作，更加了解物件導向、動態記憶體管理及多項式的運算方式。
+
+一開始不熟悉 `new`、`delete[]` 和 `copy()` 的使用方式，也曾忘記在新增項目後使用 `terms++`，導致程式一直輸出 0。
+另外，`if (theCoef == 0)` 忘記加上 `return`，造成陣列容量無法正常擴充，導致記憶體越界及程式異常。
+經過修改後，了解動態陣列需要在容量不足時擴充，並正確更新項目數量。
+
+在 Add() 中，也曾經比較錯誤的陣列位置、忘記增加 `firstindex`，以及將處理剩餘項目的 `while` 迴圈放錯位置。
+修正後，了解需要透過兩個索引比較指數，相同指數則係數相加，不同指數則先處理指數較大的項目，最後再加入剩餘項目。
+
+透過這次作業，除了學會多項式的加法、乘法及求值，也讓我知道我對 Class、指標與動態陣列的使用方式還不熟。
+這次遇到的主要問題包含陣列越界、索引控制錯誤、迴圈位置錯誤及函式宣告不一致。透過逐步檢查與修正，了解到程式即使只有少寫一行，也可能影響整體執行結果。
+未來撰寫程式時，會更加注意記憶體管理、迴圈條件與類別成員的使用方式。
 
 ## 申論及開發報告
 
