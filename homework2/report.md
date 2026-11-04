@@ -8,7 +8,7 @@
 
 ### 解題策略
 
-### 1. 使用動態陣列儲存多項式的係數與指數。
+1. 使用動態陣列儲存多項式的係數與指數。
 
 ```cpp
 class Term {
@@ -23,7 +23,7 @@ int capacity;
 int terms;
 ```
 
-### 2. 陣列空間不足時，自動擴充容量。
+2. 陣列空間不足時，自動擴充容量。
 
 ```cpp
 if (terms == capacity) {
@@ -35,7 +35,7 @@ if (terms == capacity) {
 }
 ```
 
-### 3. 比較指數，相同指數的係數相加。
+3. 比較指數，相同指數的係數相加。
 
 ```cpp
 if (TermArray[firstindex].Exp ==
@@ -51,7 +51,7 @@ if (TermArray[firstindex].Exp ==
 }
 ```
 
-### 4. 使用雙層迴圈進行多項式乘法。
+4. 使用雙層迴圈進行多項式乘法。
 
 ```cpp
 for (int i = 0; i < terms; i++) {
@@ -68,7 +68,7 @@ for (int i = 0; i < terms; i++) {
 }
 ```
 
-### 5. 將乘積中相同指數的項目合併，並將x次方多的排左邊。
+5. 將乘積中相同指數的項目合併，並將x次方多的排左邊。
 
 ```cpp
 sort(resultpolynomial.TermArray,
@@ -93,7 +93,7 @@ for (int i = 0; i < resultpolynomial.terms; ) {
 }
 ```
 
-### 6. 代入指定數值，計算代入x的多項式結果。
+6. 代入指定數值，計算代入x的多項式結果。
 
 ```cpp
 float polynomial::Eval(float f) const {
