@@ -359,7 +359,7 @@ int main() {
 | 測試案例 | 輸入參數 | 預期輸出 | 實際輸出 |
 |----------|----------|----------|----------|
 | 測試一 | P=3x²+2x+1，Q=x+4，x=2 | Add=3x²+3x+5<br>Mult=3x³+14x²+9x+4<br>Eval=17 | Add=3x²+3x+5<br>Mult=3x³+14x²+9x+4<br>Eval=17 |
-| 測試二 | P=2x+3，Q=x+1，x=1 | Add=3x+4<br>Mult=2x²+5x+3<br>Eval=5 | 待測試 |
+| 測試二 | P=2x+3，Q=x+1，x=1 | Add=3x+4<br>Mult=2x²+5x+3<br>Eval=5 | Add=3x^2 + 3x + 2<br>Mult=3x^3 + 5x^2 + 3x + 1<br>Eval=6 |
 | 測試三 | P=x²+2x+1，Q=x+2，x=3 | Add=x²+3x+3<br>Mult=x³+4x²+5x+2<br>Eval=16 | 待測試 |
 | 測試四 | P=4x²+3x+2，Q=2x+1，x=0 | Add=4x²+5x+3<br>Mult=8x³+10x²+7x+2<br>Eval=2 | 待測試 |
 | 測試五 | P=2x²+x+3，Q=x+2，x=-1 | Add=2x²+2x+5<br>Mult=2x³+5x²+5x+6<br>Eval=4 | 待測試 |
